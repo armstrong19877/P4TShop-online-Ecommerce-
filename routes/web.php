@@ -39,32 +39,24 @@ Route::get('/', function () {
 
     Route::get('admin', [AdminController::class, 'index'])->middleware('role:admin');
     //category route
-    Route::get('/admin/category', [CategoryController::class, 'index']);
-    Route::get('/admin/category/create', [CategoryController::class, 'create']);
-    Route::post('admin/category/store', [CategoryController::class, 'store']);
-    Route::get('admin/category/{id}/view', [CategoryController::class, 'view']);
-    Route::get('admin/category/{id}/edit', [CategoryController::class, 'edit']);
-    Route::patch('admin/category/{id}/update', [CategoryController::class, 'update']);
-    Route::delete('admin/category/{id}/delete', [CategoryController::class, 'destroy']);
+    Route::get('/admin/category', [CategoryController::class, 'index'])->middleware('role:admin');
+    Route::get('/admin/category/create', [CategoryController::class, 'create'])->middleware('role:admin');
+    Route::post('admin/category/store', [CategoryController::class, 'store'])->middleware('role:admin');
+    Route::get('admin/category/{id}/view', [CategoryController::class, 'view'])->middleware('role:admin');
+    Route::get('admin/category/{id}/edit', [CategoryController::class, 'edit'])->middleware('role:admin');
+    Route::patch('admin/category/{id}/update', [CategoryController::class, 'update'])->middleware('role:admin');
+    Route::delete('admin/category/{id}/delete', [CategoryController::class, 'destroy'])->middleware('role:admin');
 
     //product route
 
-/*
-    Route::group([
-        'prefix' => '/admin',
-        'as' => 'admin.',
-      ], function () {
-        // All routes go here
-      });
-      */
 
-    Route::get('admin/product', [ProductController::class, 'index']);
-    Route::get('admin/product/create', [ProductController::class, 'create']);
-    Route::post('admin/product/store', [ProductController::class, 'store']);
-    Route::get('admin/product/{id}/view', [ProductController::class, 'view']);
-    Route::get('admin/product/{id}/edit', [ProductController::class, 'edit']);
-    Route::put('admin/product/{id}/update', [ProductController::class, 'update']);
-    Route::delete('admin/product/{id}/delete', [ProductController::class, 'destroy']);
+    Route::get('admin/product', [ProductController::class, 'index'])->middleware('role:admin');
+    Route::get('admin/product/create', [ProductController::class, 'create'])->middleware('role:admin');
+    Route::post('admin/product/store', [ProductController::class, 'store'])->middleware('role:admin');
+    Route::get('admin/product/{id}/view', [ProductController::class, 'view'])->middleware('role:admin');
+    Route::get('admin/product/{id}/edit', [ProductController::class, 'edit'])->middleware('role:admin');
+    Route::put('admin/product/{id}/update', [ProductController::class, 'update'])->middleware('role:admin');
+    Route::delete('admin/product/{id}/delete', [ProductController::class, 'destroy'])->middleware('role:admin');
 
 
 
@@ -79,7 +71,7 @@ Route::get('/', function () {
 
     Route::get('add-to-cart/{id}', [CartController::class, 'productAddToCart']);
 
-    Route::get('checkout', [CartController::class, 'checkout']);
+    Route::get('checkout', [CartController::class, 'checkout'])->middleware('auth');
 
     Route::get('cart', [CartController::class, 'cart']);
 
@@ -94,11 +86,11 @@ Route::get('/', function () {
 
     //user controller
 
-    Route::post('checkout', [UsersController::class, 'store_order'])->name('checkout.store');
+    Route::post('checkout', [UsersController::class, 'store_order'])->name('checkout.store')->middleware('auth');
     
-    Route::post('pay', [UsersController::class, 'pay'])->name('payment');
+    Route::post('pay', [UsersController::class, 'pay'])->name('payment')->middleware('auth');
 
-    Route::get('success', [UsersController::class, 'success']);
+    Route::get('success', [UsersController::class, 'success'])->middleware('auth');
 
-    Route::get('error', [UsersController::class, 'error']);
+    Route::get('error', [UsersController::class, 'error'])->middleware('auth');
     
